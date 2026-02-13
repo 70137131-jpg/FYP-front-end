@@ -1,4 +1,14 @@
-/* ===== Reset ===== */
+/* 
+  ATIS Main Stylesheet (style.css)
+  This file controls the look and feel of the entire application.
+  It uses CSS variables for easy color management and Flexbox/Grid for layout.
+*/
+
+/* ========================================= */
+/* 1. GLOBAL RESET & VARIABLES               */
+/* ========================================= */
+
+/* Reset default browser styles */
 *,
 *::before,
 *::after {
@@ -8,7 +18,7 @@
 }
 
 :root {
-    /* Sidebar */
+    /* Sidebar Colors */
     --sidebar-bg: #0f1729;
     --sidebar-w: 220px;
     --sidebar-w-collapsed: 64px;
@@ -16,7 +26,7 @@
     --sidebar-active: #4285f4;
     --sidebar-active-bg: rgba(66, 133, 244, 0.12);
 
-    /* Page */
+    /* Page Colors */
     --bg: #f0f2f5;
     --white: #ffffff;
     --text-primary: #1a1a2e;
@@ -24,13 +34,14 @@
     --text-muted: #888;
     --border: #e5e7eb;
 
-    /* Accents */
+    /* Status Colors */
     --blue: #4285f4;
     --green: #10b981;
     --red: #ef4444;
     --orange: #f59e0b;
     --purple: #8b5cf6;
 
+    /* Typography & Spacing */
     --font: 'Inter', system-ui, -apple-system, sans-serif;
     --radius: 10px;
     --radius-sm: 6px;
@@ -39,6 +50,7 @@
 
 html {
     font-size: 15px;
+    /* Base font size */
 }
 
 body {
@@ -47,27 +59,40 @@ body {
     color: var(--text-primary);
     min-height: 100vh;
     -webkit-font-smoothing: antialiased;
+    /* Smoother text on Mac */
 }
 
-/* ===== Layout ===== */
+
+/* ========================================= */
+/* 2. MAIN LAYOUT STRUCTURE                  */
+/* ========================================= */
+
 .layout {
     display: flex;
+    /* Sidebar + Main Content side-by-side */
     min-height: 100vh;
 }
 
 .main-area {
     flex: 1;
+    /* Take up remaining space */
     margin-left: var(--sidebar-w);
+    /* Push content right by sidebar width */
     display: flex;
     flex-direction: column;
     transition: margin-left 0.3s ease;
 }
 
+/* Adjust margin when sidebar is collapsed */
 body.sidebar-collapsed .main-area {
     margin-left: var(--sidebar-w-collapsed);
 }
 
-/* ===== Sidebar ===== */
+
+/* ========================================= */
+/* 3. SIDEBAR STYLES                         */
+/* ========================================= */
+
 .sidebar {
     position: fixed;
     top: 0;
@@ -83,7 +108,7 @@ body.sidebar-collapsed .main-area {
     overflow: hidden;
 }
 
-/* Drag handle – visible stripe on right edge */
+/* Drag handle visual on the right edge */
 .sidebar::after {
     content: "";
     position: absolute;
@@ -105,6 +130,7 @@ body.sidebar-collapsed .sidebar {
     width: var(--sidebar-w-collapsed);
 }
 
+/* Brand / Logo Area */
 .sidebar-brand {
     display: flex;
     align-items: center;
@@ -147,6 +173,7 @@ body.sidebar-collapsed .sidebar-brand-text {
     color: var(--sidebar-text);
 }
 
+/* Section Labels (e.g., MAIN) */
 .sidebar-section-label {
     font-size: 0.65rem;
     font-weight: 600;
@@ -162,6 +189,7 @@ body.sidebar-collapsed .sidebar-section-label {
     display: none;
 }
 
+/* Navigation Links */
 .sidebar-nav {
     display: flex;
     flex-direction: column;
@@ -176,6 +204,7 @@ body.sidebar-collapsed .sidebar-section-label {
     border-radius: var(--radius-sm);
     color: var(--sidebar-text);
     text-decoration: none;
+    /* Remove underline */
     font-size: 0.85rem;
     font-weight: 500;
     transition: all var(--transition);
@@ -196,6 +225,18 @@ body.sidebar-collapsed .nav-item span {
     color: var(--sidebar-active);
 }
 
+/* Sidebar Badges */
+.nav-badge {
+    margin-left: auto;
+    background: var(--red);
+    color: white;
+    font-size: 0.7rem;
+    padding: 0.1rem 0.4rem;
+    border-radius: 10px;
+    font-weight: bold;
+}
+
+/* Collapse Button */
 .sidebar-collapse {
     margin-top: auto;
     display: flex;
@@ -225,7 +266,11 @@ body.sidebar-collapsed .sidebar-collapse svg {
     transform: rotate(180deg);
 }
 
-/* ===== Top Bar ===== */
+
+/* ========================================= */
+/* 4. TOP BAR STYLES                         */
+/* ========================================= */
+
 .topbar {
     display: flex;
     align-items: center;
@@ -238,6 +283,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
 .topbar-left {
     display: flex;
     align-items: center;
+    /* Vertically center */
     gap: 0.5rem;
 }
 
@@ -247,6 +293,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     background: var(--green);
     border-radius: 50%;
     box-shadow: 0 0 6px rgba(16, 185, 129, 0.5);
+    /* Glow effect */
 }
 
 .status-text {
@@ -260,6 +307,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     gap: 0.75rem;
 }
 
+/* Icon Buttons */
 .topbar-icon-btn {
     position: relative;
     width: 36px;
@@ -281,9 +329,11 @@ body.sidebar-collapsed .sidebar-collapse svg {
 
 .topbar-icon-btn[aria-label="Sign out"]:hover {
     background: rgba(239, 68, 68, 0.08);
+    /* Red tint on hover */
     color: var(--red);
 }
 
+/* Notification Badge */
 .notification-badge {
     position: absolute;
     top: 4px;
@@ -300,7 +350,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     justify-content: center;
 }
 
-/* ===== Notification Dropdown ===== */
+/* Notification Dropdown Panel */
 .notification-wrapper {
     position: relative;
 }
@@ -361,21 +411,26 @@ body.sidebar-collapsed .sidebar-collapse svg {
 }
 
 .notif-item {
+    padding: 0;
+    border-bottom: 1px solid var(--border);
+}
+
+.notif-link {
     display: flex;
     align-items: center;
     gap: 0.65rem;
     padding: 0.75rem 1rem;
-    border-bottom: 1px solid var(--border);
-    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
     transition: background 0.15s;
+}
+
+.notif-link:hover {
+    background: rgba(66, 133, 244, 0.04);
 }
 
 .notif-item:last-child {
     border-bottom: none;
-}
-
-.notif-item:hover {
-    background: rgba(66, 133, 244, 0.04);
 }
 
 .notif-dot {
@@ -395,7 +450,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     box-shadow: 0 0 6px rgba(239, 68, 68, 0.45);
 }
 
-.notif-body {
+.notif-content {
     flex: 1;
     min-width: 0;
     display: flex;
@@ -403,7 +458,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     gap: 2px;
 }
 
-.notif-text {
+.notif-main {
     font-size: 0.8rem;
     font-weight: 500;
     color: var(--text-primary);
@@ -412,7 +467,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     text-overflow: ellipsis;
 }
 
-.notif-time {
+.notif-sub {
     font-size: 0.68rem;
     color: var(--text-muted);
 }
@@ -424,6 +479,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     color: var(--text-muted);
 }
 
+/* User Profile Section */
 .topbar-user {
     display: flex;
     align-items: center;
@@ -460,7 +516,11 @@ body.sidebar-collapsed .sidebar-collapse svg {
     color: var(--text-muted);
 }
 
-/* ===== Content ===== */
+
+/* ========================================= */
+/* 5. PAGE CONTENT & HEADERS                 */
+/* ========================================= */
+
 .content {
     padding: 1.5rem 1.75rem 2rem;
     flex: 1;
@@ -484,7 +544,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     margin-top: 0.15rem;
 }
 
-.btn-refresh {
+.details-btn {
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
@@ -500,15 +560,20 @@ body.sidebar-collapsed .sidebar-collapse svg {
     transition: all var(--transition);
 }
 
-.btn-refresh:hover {
+.details-btn:hover {
     border-color: var(--blue);
     color: var(--blue);
 }
 
-/* ===== Stats Grid ===== */
+
+/* ========================================= */
+/* 6. STATISTICS CARDS                       */
+/* ========================================= */
+
 .stats-grid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
+    /* 4 columns on desktop */
     gap: 1rem;
     margin-bottom: 1.5rem;
 }
@@ -542,6 +607,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     justify-content: center;
 }
 
+/* Icon Color Variants */
 .stat-icon-blue {
     background: rgba(66, 133, 244, 0.1);
     color: var(--blue);
@@ -574,11 +640,11 @@ body.sidebar-collapsed .sidebar-collapse svg {
     color: var(--text-muted);
 }
 
-.stat-trend.trend-up {
-    color: var(--green);
-}
 
-/* ===== Table Card ===== */
+/* ========================================= */
+/* 7. TABLES & LISTS                         */
+/* ========================================= */
+
 .table-card {
     background: var(--white);
     border: 1px solid var(--border);
@@ -604,6 +670,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     gap: 0.5rem;
 }
 
+/* Search Box */
 .search-box {
     display: flex;
     align-items: center;
@@ -629,6 +696,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     color: var(--text-muted);
 }
 
+/* Status Filter Dropdown */
 .status-filter {
     font-family: var(--font);
     font-size: 0.8rem;
@@ -641,9 +709,10 @@ body.sidebar-collapsed .sidebar-collapse svg {
     outline: none;
 }
 
-/* Table */
+/* Table Settings */
 .table-wrapper {
     overflow-x: auto;
+    /* Scroll horizontally on small screens */
 }
 
 .inspection-table {
@@ -672,13 +741,14 @@ body.sidebar-collapsed .sidebar-collapse svg {
 
 .inspection-table tbody tr:hover {
     background: rgba(66, 133, 244, 0.03);
+    /* Subtle hover effect */
 }
 
 .inspection-table tbody tr:last-child td {
     border-bottom: none;
 }
 
-/* Cell variants */
+/* Specific Cell Styles */
 .inspection-table .cell-time {
     white-space: nowrap;
     line-height: 1.5;
@@ -746,7 +816,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     color: var(--red);
 }
 
-/* Confidence bar */
+/* Confidence Bar */
 .cell-confidence {
     white-space: nowrap;
 }
@@ -787,7 +857,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
     min-width: 28px;
 }
 
-/* Action link */
+/* Action Links */
 .action-link {
     font-size: 0.82rem;
     color: var(--blue);
@@ -802,7 +872,11 @@ body.sidebar-collapsed .sidebar-collapse svg {
     text-decoration: underline;
 }
 
-/* ===== Responsive ===== */
+
+/* ========================================= */
+/* 8. RESPONSIVE DESIGN (MOBILE)             */
+/* ========================================= */
+
 @media (max-width: 1024px) {
     .stats-grid {
         grid-template-columns: repeat(2, 1fr);
@@ -812,6 +886,7 @@ body.sidebar-collapsed .sidebar-collapse svg {
 @media (max-width: 768px) {
     .sidebar {
         display: none;
+        /* Hide sidebar on mobile */
     }
 
     .main-area {
